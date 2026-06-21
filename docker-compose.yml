@@ -1,0 +1,48 @@
+services:
+
+  webserver:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+      args:
+        NGINX_VERSION: ${NGINX_VERSION}
+    container_name: ${PROJECT_NAME}_Nginx_${NGINX_VERSION}
+    ports:
+      - "${WEBSERVER_PORT}:443"
+    volumes:
+      - ./public:/var/www/html
+    depends_on:
+      - php
+
+  php:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    container_name: ${PROJECT_NAME}_PHP_${PHP_VERSION}
+    volumes:
+      - ./public:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    depends_on:
+      - database
+
+  database:
+    image: mariadb:${MARIADB_VERSION}
+    container_name: ${PROJECT_NAME}_MariaDB_${MARIADB_VERSION}
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DATABASE_SCHEMA}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    ports:
+      - "${DATABASE_PORT}:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+volumes:
+  mariadb-data:

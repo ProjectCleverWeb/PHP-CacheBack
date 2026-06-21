@@ -1,0 +1,15 @@
+<phpunit bootstrap="testing/bootstrap.php" colors="false">
+	<testsuites>
+		<testsuite name="projectcleverweb\semantic-ui-wordpress">
+			<directory>testing/tests</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory>src/include</directory>
+		</whitelist>
+	</filter>
+	<logging>
+		<log type="coverage-text" target="php://stdout" />
+	</logging>
+</phpunit>
