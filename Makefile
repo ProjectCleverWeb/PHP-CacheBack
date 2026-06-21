@@ -18,9 +18,9 @@ create-cert::
 create-cert:: hosts
 
 start:
-	@docker compose down
+	@#docker compose down
 	@docker compose up -d --build
-	@echo "The domain is https://$(DOMAIN)"
+	@echo "The domain is https://$(DOMAIN):$(WEBSERVER_PORT)/public"
 
 test:
 	@docker compose exec php vendor/bin/phpunit

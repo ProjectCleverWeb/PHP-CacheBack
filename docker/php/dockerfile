@@ -13,11 +13,11 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     mariadb-client
 
+RUN pecl install apcu \
+    && docker-php-ext-enable apcu
+
 RUN docker-php-ext-install \
-    mysqli \
-    pdo_mysql \
-    intl \
-    zip
+    pdo_mysql
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug

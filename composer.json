@@ -1,0 +1,21 @@
+{
+	"name"              : "projectcleverweb/cacheback",
+	"description"       : "Simple Layered Caching",
+	"minimum-stability" : "stable",
+	"license"           : "MIT",
+	"authors"           : [
+		{
+			"name"  : "Nicholas Summers",
+			"email" : "ProjectCleverWeb@gmail.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"CacheBack\\" : "src/"
+		}
+	},
+	"require" : {
+		"php" : "^8.5",
+		"ext-apcu" : "*"
+	}
+}
